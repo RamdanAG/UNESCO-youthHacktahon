@@ -1,0 +1,11 @@
+// Notification
+// Toast-style in-game notification.
+// Placeholder UI - replace with real design once assets/UX are ready.
+
+export default function Notification() {
+  return (
+    <div className="border border-neutral-700 p-4 rounded-md text-neutral-300">
+      <p className="text-sm font-mono">{"Notification - Coming Soon"}</p>
+    </div>
+  );
+}

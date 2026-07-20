@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+
+# Build output
+.next/
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# AI vector store (data lokal RAG, jangan ikut commit — beda tiap mesin)
+ai/data/
+ai/**/chroma/
+*.sqlite3
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store          # macOS
+Thumbs.db          # Windows
+desktop.ini        # Windows
+
+# Editor
+.vscode/
+.idea/
+
+# Supabase CLI (kalau nanti dipakai)
+supabase/.branches/
+supabase/.temp/
