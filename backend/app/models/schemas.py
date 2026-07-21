@@ -46,3 +46,29 @@ class SessionResponse(BaseModel):
     status: str
     host_id: str
     players: list[SessionPlayerResponse]
+
+    # ── Character ─────────────────────────────────────────
+
+class CreateCharacterRequest(BaseModel):
+    session_player_id: str
+    class_id: str
+
+
+class CharacterResponse(BaseModel):
+    id: str
+    session_player_id: str
+    class_id: str
+    class_name: str
+    level: int
+    exp: int
+    str_stat: int
+    dex: int
+    con: int
+    int_stat: int
+    wis: int
+    current_hp: int
+    max_hp: int
+    current_mp: int
+    max_mp: int
+    armor_class: int
+    unspent_stat_points: int
