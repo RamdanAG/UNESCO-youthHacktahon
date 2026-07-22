@@ -138,4 +138,26 @@ class StoryFlagResponse(BaseModel):
 class StoryStateResponse(BaseModel):
     session_id: str
     current_scene_id: str | None
-    flags: list[StoryFlagResponse]lan
+    flags: list[StoryFlagResponse]
+
+    # ── Save/Load ─────────────────────────────────────────
+
+class SaveGameRequest(BaseModel):
+    session_id: str
+    saved_by: str
+    snapshot: dict  # bentuk bebas, ditentukan Frontend (SaveEngine)
+
+
+class SaveResponse(BaseModel):
+    id: str
+    session_id: str
+    saved_by: str
+    snapshot: dict
+    created_at: str
+
+
+class LoadGameResponse(BaseModel):
+    id: str
+    session_id: str
+    snapshot: dict
+    created_at: str
