@@ -121,3 +121,21 @@ class ResolveActionResponse(BaseModel):
     character_current_mp: int
     battle_status: str
     next_turn_character_id: str | None
+
+    # ── Story ─────────────────────────────────────────────
+
+class SetStoryFlagRequest(BaseModel):
+    session_id: str
+    flag_key: str
+    flag_value: str
+
+
+class StoryFlagResponse(BaseModel):
+    flag_key: str
+    flag_value: str
+
+
+class StoryStateResponse(BaseModel):
+    session_id: str
+    current_scene_id: str | None
+    flags: list[StoryFlagResponse]lan
