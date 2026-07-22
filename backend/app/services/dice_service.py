@@ -1,9 +1,9 @@
-# DiceService
-# Server-authoritative dice rolls to prevent client-side cheating.
+import random
 
 
 class DiceService:
+    def roll(self, sides: int = 6) -> int:
+        return random.randint(1, sides)
 
-    def roll(self, *args, **kwargs):
-        # TODO: implement roll
-        raise NotImplementedError("roll not implemented yet")
+
+dice_service = DiceService()

@@ -202,3 +202,9 @@ class NarrationRequest(BaseModel):
 class NarrationResponse(BaseModel):
     scene_id: str
     narration: str
+    
+class DiceRollResponse(BaseModel):
+    result: int
+
+class DiceRollRequest(BaseModel):
+    sides: int = 6

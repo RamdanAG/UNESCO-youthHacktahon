@@ -63,13 +63,33 @@ development supaya ada yang playable secepat mungkin):
 
 ### A.2 Board & Movement — Detail Konkret
 
-Sesuai GDD, movement itu **grid-based ala Roll20**, bukan Monopoli:
-- Pemain roll dice (misal hasil 6), lalu bisa jalan ke arah manapun
-  (atas/bawah/kiri/kanan) sejauh total maksimal 6 kotak, TERMASUK bisa
-  belok-belok (bukan garis lurus doang).
-- `MovementEngine.moveTo()` harus validasi: jumlah langkah yang dipakai
-  nggak boleh melebihi hasil dice, dan nggak boleh keluar batas grid atau
-  numpuk di tile yang `blocked`.
+**PENTING — ini revisi dari draft GDD awal, ikuti versi ini:** movement
+**TIDAK berdasarkan hasil dice roll**. Setiap giliran, tiap entitas punya
+jatah gerak tetap (movement budget), konstan untuk semua kelas/level:
+
+- **Karakter pemain: 4 kotak** per giliran.
+- **Musuh: 6 kotak** per giliran.
+
+Jatah ini **boleh dipecah ke beberapa arah** dalam 1 giliran yang sama
+(bukan garis lurus 1 arah doang) — contoh: gerak kanan 2 kotak, lalu
+bawah 2 kotak, totalnya tetap 4 (jatah karakter pemain habis).
+
+- `MovementEngine.moveTo()` harus validasi: total kotak yang sudah dipakai
+  sepanjang giliran itu (across semua segmen arah) tidak boleh melebihi
+  jatah gerak entitasnya (4 untuk karakter, 6 untuk musuh), dan tidak boleh
+  keluar batas grid atau numpuk di tile yang `blocked`.
+- Karena ini angka konstan (tidak pernah beda per kelas/skill sampai ada
+  keputusan lain), **cukup taruh sebagai konstanta**, tidak perlu kolom
+  database atau fetch dari Backend — tambahkan di `lib/constants.ts`:
+  ```ts
+  export const PLAYER_MOVEMENT_RANGE = 4;
+  export const ENEMY_MOVEMENT_RANGE = 6;
+  ```
+- **Dice roll TIDAK dipakai untuk movement.** Endpoint `POST /api/v1/dice/roll`
+  yang sudah dibangun Backend tetap ada sebagai utilitas generik (angka 1-6,
+  bisa dipakai untuk keperluan lain seperti animasi/flavor atau "Roll Turn"
+  di awal battle nanti), tapi jangan dipanggil untuk menentukan jarak gerak
+  di board — itu murni pakai konstanta di atas.
 - **Good enough untuk MVP**: grid ukuran tetap (misal 10×10, sesuai
   `lib/constants.ts` yang sudah ada `BOARD_WIDTH`/`BOARD_HEIGHT`), belum
   perlu grid dinamis per scene.

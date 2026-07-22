@@ -1,4 +1,4 @@
-466e71b3-996c-416c-853d-632aa54d4eb4# Backend Contract — Status, Batas Tanggung Jawab, dan Aturan Integrasi
+# Backend Contract — Status, Batas Tanggung Jawab, dan Aturan Integrasi
 
 Dokumen ini adalah **sumber kebenaran (source of truth)** tentang apa yang
 sudah dibangun di Backend, bagaimana Frontend harus mengonsumsinya, dan
@@ -16,15 +16,26 @@ lain sebelum ubah kode. Jangan langsung ubah endpoint tanpa update kontrak.
 
 | Bagian | Status | Catatan |
 |---|---|---|
-| Database (12 tabel Supabase) | ✅ Selesai | Lihat Bagian 5 |
+| Database (13 tabel Supabase) | ✅ Selesai | Lihat Bagian 5, file `database/schema.sql` |
 | Auth (`register`, `login`) | ✅ Selesai & teruji | Pakai Supabase Auth bawaan |
 | Session (`create`, `join`) | ✅ Selesai & teruji | Room max 4 pemain |
-| Session move/movement | ❌ Belum | Endpoint ada, masih placeholder |
-| Character (stat, level, skill) | ❌ Belum dikerjakan | Tabel sudah ada, service belum |
-| Battle/Combat (dice, difficulty, damage) | ❌ Belum dikerjakan | Tabel sudah ada, service belum |
-| Story flags | ❌ Belum dikerjakan | Tabel sudah ada, service belum |
-| Save/Load | ❌ Belum dikerjakan | Tabel sudah ada, service belum |
-| AI Gateway (`/api/v1/ai/*`) | ❌ Belum dikerjakan | Masih placeholder "Coming Soon" |
+| Character (`POST /player/character`, `GET /player/{id}`) | ✅ Selesai & teruji | Hitung formula GDD (max HP/MP/AC) on-the-fly |
+| Battle Tahap 1 (`/battle/start`, `/action`, `/action/{id}/resolve`) | ✅ Selesai & teruji | Belum ada efek status (stun/DOT) — itu Tahap 2, belum dikerjakan |
+| Story flags (`/story/flag`, `/story/{id}`) | ✅ Selesai & teruji | |
+| Save/Load (`/save`, `/save/{id}`) | ✅ Selesai & teruji | Ambil save terbaru saja (belum ada pilih checkpoint tertentu) |
+| Dice roll (`/dice/roll`) | ✅ Selesai & teruji | Utilitas generik 1-`sides`; **TIDAK dipakai untuk movement** — lihat catatan di bawah |
+| AI Gateway (`/api/v1/ai/*`) | ✅ Gateway selesai, nunggu AI service | Forward ke `http://localhost:8001`, akan `502` sampai AI service jalan |
+| Session move/movement | ❌ Belum | Endpoint ada, masih placeholder — menunggu Frontend `MovementEngine`, lihat catatan movement di bawah |
+| Inventory | ❌ Sengaja tidak dikerjakan | GDD tidak mendefinisikan sistem item — tabel `inventory_items` tetap ada di database untuk kemungkinan pemakaian nanti, tapi service/endpoint dibiarkan placeholder sampai ada keputusan desain |
+| Dialogue & Ending | ❌ Sengaja tidak dikerjakan | Konten dialog & percabangan ending ditulis manual sebagai data statis di Frontend, bukan dari database — cukup pakai `/story/flag` untuk simpan pilihan yang menentukan ending mana yang dipilih Frontend |
+
+**Catatan penting soal movement (revisi dari draft GDD awal):** movement
+BUKAN berdasarkan hasil dice. Tiap giliran, karakter pemain punya jatah
+gerak tetap **4 kotak**, musuh **6 kotak** — konstan untuk semua kelas/level,
+tidak disimpan di database. Jatah ini boleh dipecah ke beberapa arah dalam
+1 giliran (misal kanan 2 + bawah 2 = 4). Detail lengkap & alasan ada di
+`docs/WORK_BREAKDOWN.md` Bagian A.2 — WAJIB dibaca sebelum membangun
+`MovementEngine` di Frontend.
 
 **Penting untuk Frontend & AI dev:** jangan asumsikan endpoint yang statusnya
 ❌ di atas sudah berperilaku sesuai desain akhir. Semua endpoint itu ADA
