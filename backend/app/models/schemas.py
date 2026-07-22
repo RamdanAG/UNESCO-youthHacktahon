@@ -161,3 +161,44 @@ class LoadGameResponse(BaseModel):
     session_id: str
     snapshot: dict
     created_at: str
+
+# ── AI Gateway ────────────────────────────────────────
+
+class GenerateArticleRequest(BaseModel):
+    topic: str
+    difficulty: int
+
+
+class ArticleResponse(BaseModel):
+    title: str
+    body: str
+    is_hoax: bool
+
+
+class CheckAnswerRequest(BaseModel):
+    question_id: str
+    answer: str
+
+
+class CheckAnswerResponse(BaseModel):
+    correct: bool
+    explanation: str
+
+
+class NpcDialogueRequest(BaseModel):
+    npc_id: str
+    context: str
+
+
+class NpcDialogueResponse(BaseModel):
+    npc_id: str
+    line: str
+
+
+class NarrationRequest(BaseModel):
+    scene_id: str
+
+
+class NarrationResponse(BaseModel):
+    scene_id: str
+    narration: str
