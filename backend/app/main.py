@@ -12,6 +12,7 @@ from app.api.v1 import (
     inventory,
     ending,
     ai_gateway,
+    battle,
 )
 
 app = FastAPI(title="UNESCO Youth Hackathon - Educational AI Board Game API")
@@ -32,7 +33,7 @@ app.include_router(dice.router, prefix="/api/v1/dice", tags=["dice"])
 app.include_router(inventory.router, prefix="/api/v1/inventory", tags=["inventory"])
 app.include_router(ending.router, prefix="/api/v1/ending", tags=["ending"])
 app.include_router(ai_gateway.router, prefix="/api/v1/ai", tags=["ai"])
-
+app.include_router(battle.router, prefix="/api/v1/battle", tags=["battle"])
 
 
 @app.get("/health/db")
