@@ -1,46 +1,83 @@
+# ===========================
 # Dependencies
+# ===========================
 node_modules/
-.venv/
-venv/
-
-# Build output
-.next/
-dist/
-build/
-out/
-*.tsbuildinfo
+**/node_modules/
 
 # Python
+.venv/
+venv/
+**/.venv/
+**/venv/
 __pycache__/
-*.pyc
+*.py[cod]
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
 
-# Environment variables
-.env
-.env.local
-.env.*.local
+# ===========================
+# Next.js / React
+# ===========================
+.next/
+**/.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
 
-# AI vector store (data lokal RAG, jangan ikut commit — beda tiap mesin)
+# ===========================
+# Environment
+# ===========================
+.env
+.env.*
+!.env.example
+
+# ===========================
+# Logs
+# ===========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===========================
+# IDE
+# ===========================
+.vscode/
+.idea/
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===========================
+# AI / Vector DB
+# ===========================
 ai/data/
 ai/**/chroma/
 *.sqlite3
 
-# Logs
-*.log
-npm-debug.log*
+# ===========================
+# Temporary
+# ===========================
+tmp/
+temp/
+.cache/
 
-# OS
-.DS_Store          # macOS
-Thumbs.db          # Windows
-desktop.ini        # Windows
-
-# Editor
-.vscode/
-.idea/
-
-# Supabase CLI (kalau nanti dipakai)
+# ===========================
+# Supabase
+# ===========================
 supabase/.branches/
 supabase/.temp/
+
+# ===========================
+# Misc
+# ===========================
+*.swp
+*.swo
